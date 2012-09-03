@@ -171,6 +171,8 @@ func (db *Database) ToMap() (db_map map[string]string, err error) {
 	)
 	db_map = make(map[string]string)
 
+  db.Sync() // ensure pending changes are written
+
 	curr_k, err = db.FirstKey()
 	if err != nil {
 		return db_map, nil
@@ -178,7 +180,7 @@ func (db *Database) ToMap() (db_map map[string]string, err error) {
 
 	curr_v, err = db.Fetch(curr_k)
 	if err != nil {
-		return db_map, nil
+		return db_map, err
 	}
 
 	db_map[curr_k] = curr_v

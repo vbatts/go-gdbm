@@ -50,6 +50,29 @@ func TestKeys(t *testing.T) {
     t.Error("NextKey() expected 'foo' or 'baz'")
   }
 
+  m, err := db.ToMap()
+  if err != nil {
+    t.Error(err)
+  }
+  println(len(m))
+  if len(m) != 2 {
+    t.Error("ToMap returned map with incorrect number of keys")
+  }
+
+  for k,v := range m {
+    if k == "foo" {
+      if v != "bar" {
+        t.Error("ToMap(); m[\"foo\"] should be \"bar\"")
+      }
+    } else if k == "baz" {
+      if v != "bax" {
+        t.Error("ToMap(); m[\"bar\"] should be \"bax\"")
+      }
+    } else {
+      t.Error("invalid key/value pair")
+    }
+  }
+
 }
 
 // Tests that the database is recreated everytime when opened in "c" mode.
