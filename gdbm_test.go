@@ -15,7 +15,7 @@ func TestVersion(t *testing.T) {
 
 // Create a database, insert two rows, and check that FirstKey, and NextKey return those keys
 func TestKeys(t *testing.T) {
-  var db_filename string = "test.gdbm" // pending the test_cleanup merge
+	var db_filename string = "test.gdbm" // pending the test_cleanup merge
 
 	os.Remove(db_filename) // pending the test_cleanup merge
 	db, err := Open(db_filename, "c")
@@ -34,44 +34,44 @@ func TestKeys(t *testing.T) {
 		t.Error("Database let readonly client write")
 	}
 
-  k,err := db.FirstKey()
-  if err != nil {
-    t.Error(err)
-  }
-  if k != "foo" && k != "baz" {
-    t.Error("FirstKey() expected 'foo' or 'baz'")
-  }
+	k, err := db.FirstKey()
+	if err != nil {
+		t.Error(err)
+	}
+	if k != "foo" && k != "baz" {
+		t.Error("FirstKey() expected 'foo' or 'baz'")
+	}
 
-  n,err := db.NextKey(k)
-  if err != nil {
-    t.Error(err)
-  }
-  if n != "foo" && n != "baz" {
-    t.Error("NextKey() expected 'foo' or 'baz'")
-  }
+	n, err := db.NextKey(k)
+	if err != nil {
+		t.Error(err)
+	}
+	if n != "foo" && n != "baz" {
+		t.Error("NextKey() expected 'foo' or 'baz'")
+	}
 
-  m, err := db.ToMap()
-  if err != nil {
-    t.Error(err)
-  }
-  println(len(m))
-  if len(m) != 2 {
-    t.Error("ToMap returned map with incorrect number of keys")
-  }
+	m, err := db.ToMap()
+	if err != nil {
+		t.Error(err)
+	}
+	println(len(m))
+	if len(m) != 2 {
+		t.Error("ToMap returned map with incorrect number of keys")
+	}
 
-  for k,v := range m {
-    if k == "foo" {
-      if v != "bar" {
-        t.Error("ToMap(); m[\"foo\"] should be \"bar\"")
-      }
-    } else if k == "baz" {
-      if v != "bax" {
-        t.Error("ToMap(); m[\"bar\"] should be \"bax\"")
-      }
-    } else {
-      t.Error("invalid key/value pair")
-    }
-  }
+	for k, v := range m {
+		if k == "foo" {
+			if v != "bar" {
+				t.Error("ToMap(); m[\"foo\"] should be \"bar\"")
+			}
+		} else if k == "baz" {
+			if v != "bax" {
+				t.Error("ToMap(); m[\"bar\"] should be \"bax\"")
+			}
+		} else {
+			t.Error("invalid key/value pair")
+		}
+	}
 
 }
 
