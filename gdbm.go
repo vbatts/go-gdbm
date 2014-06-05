@@ -39,7 +39,7 @@ type DatabaseCfg struct {
 }
 
 var (
-  // The error received when the end of the database is reached
+	// The error received when the end of the database is reached
 	NoError = errors.New("No error")
 )
 
@@ -169,14 +169,12 @@ An Iteration might look like:
 
   k, err := db.FirstKey()
   if err != nil {
-    fmt.Fprintln(os.Stderr, err)
-    os.Exit(1)
+    return err
   }
   for {
     v, err := db.Fetch(k)
     if err != nil {
-      fmt.Fprintln(os.Stderr, err)
-      os.Exit(1)
+      return err
     }
     fmt.Println(v)
 
@@ -184,8 +182,7 @@ An Iteration might look like:
     if err == gdbm.NoError {
       break
     } else if err != nil {
-      fmt.Fprintln(os.Stderr, err)
-      os.Exit(1)
+      return err
     }
   }
 
