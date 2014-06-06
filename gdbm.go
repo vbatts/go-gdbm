@@ -202,6 +202,29 @@ func (db *Database) NextKey(key string) (value string, err error) {
 	return value, nil
 }
 
+/*
+Convinience to get all the keys from this database
+*/
+func (db *Database) Keys() ([]string, error) {
+	keys := []string{}
+	k, err := db.FirstKey()
+	if err != nil {
+		return keys, err
+	}
+
+	keys = append(keys, k)
+	for {
+		k, err = db.NextKey(k)
+		if err == NoError {
+			break
+		} else if err != nil {
+			return keys, err
+		}
+		keys = append(keys, k)
+	}
+	return keys, nil
+}
+
 // Fetches the value of the given key. If the key is not in the database, an
 // error will be returned in err. Otherwise, value will be the value string
 // that is keyed by `key`.

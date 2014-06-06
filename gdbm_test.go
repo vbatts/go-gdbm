@@ -54,6 +54,14 @@ func TestKeys(t *testing.T) {
 		"biff",
 	}
 
+	keys, err := db.Keys()
+	if err != nil {
+		t.Error(err)
+	}
+	if len(expected_keys) != len(keys) {
+		t.Errorf("expected [%d] keys, got [%d]", len(expected_keys), len(keys))
+	}
+
 	k, err := db.FirstKey()
 	if err != nil {
 		t.Error(err)
